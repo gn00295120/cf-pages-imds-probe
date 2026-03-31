@@ -1,0 +1,21 @@
+name: IMDS Probe
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Run IMDS Probe
+        run: bash build.sh
+        
+      - name: Upload probe results
+        uses: actions/upload-artifact@v4
+        with:
+          name: probe-results
+          path: /tmp/probe-output.txt
+        if: always()
